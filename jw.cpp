@@ -208,8 +208,9 @@ void setup()
   GD.copy(RAM_SPRIMG, sprites, sizeof(sprites));
 
   // display title
-  putstr(0, 33, "Jaromils World!");
+  putstr(0, 33, "Itsa me Jaromil!");
   Serial.begin(9600);
+  putstr(0, 34, "the crumbles are the best!");
 }
 
 #ifdef TILE_DEBUG
@@ -237,6 +238,14 @@ void loop()
     GD.__wstartspr(0);
     draw_jaromil(jaromil_x, jaromil_y, 1+ (jaromil_sprite_idx++ % 3), 2);
     GD.__end();
+#ifdef TILE_DEBUG
+    putchr(44, 33, (char) ((tileidx-5) & 255));
+    putchr(45, 33, (char) ((tileidx-4) & 255));
+    putchr(46, 33, (char) ((tileidx-3) & 255));
+    putchr(47, 33, (char) ((tileidx-2) & 255));
+    putchr(48, 33, (char) ((tileidx-1) & 255));
+    putchr(49, 33, (char) (tileidx++ & 255));
+#endif
   }
 
   // handle joystick input
@@ -246,17 +255,6 @@ void loop()
   Serial.print(digitalRead(buttonLeft)); //Read the value of the button left and print it on the serial port.
   Serial.print(digitalRead(buttonRight)); //Read the value of the button right and print it on the serial port.
   Serial.println(digitalRead(buttonFire)); //Read the value of the button fire and print it on the serial port.
-#endif
-
-#ifdef TILE_DEBUG
-  if ((xscroll % 8) == 0) {
-    putchr(5, 34, (char) ((tileidx-5) & 255));
-    putchr(4, 34, (char) ((tileidx-4) & 255));
-    putchr(3, 34, (char) ((tileidx-3) & 255));
-    putchr(2, 34, (char) ((tileidx-2) & 255));
-    putchr(1, 34, (char) ((tileidx-1) & 255));
-    putchr(0, 34, (char) (tileidx++ & 255));
-  }
 #endif
 
   GD.waitvblank();
